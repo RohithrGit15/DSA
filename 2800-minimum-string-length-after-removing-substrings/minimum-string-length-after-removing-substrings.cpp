@@ -1,22 +1,19 @@
 class Solution {
 public:
     int minLength(string s) {
+        int writeIdx = 0; // Acts as the top of our in-place stack
 
-        string result = "";
-
-        for (int i = 0; i < s.size(); i++) {
-            if (!result.empty()) {
-                if (result.back() == 'A' && s[i] == 'B') {
-                    result.pop_back();
-                } else if (result.back() == 'C' && s[i] == 'D') {
-                    result.pop_back();
-                } else {
-                    result.push_back(s[i]);
-                }
+        for (int readIdx = 0; readIdx < s.size(); readIdx++) {
+            if (writeIdx > 0 && 
+               ((s[writeIdx - 1] == 'A' && s[readIdx] == 'B') || 
+                (s[writeIdx - 1] == 'C' && s[readIdx] == 'D'))) {
+                writeIdx--; // "Pop" by moving the write pointer back
             } else {
-                result.push_back(s[i]);
+                s[writeIdx] = s[readIdx]; // "Push" by overwriting in-place
+                writeIdx++;
             }
         }
-        return result.size();
+
+        return writeIdx; // Represents the final valid length
     }
 };
