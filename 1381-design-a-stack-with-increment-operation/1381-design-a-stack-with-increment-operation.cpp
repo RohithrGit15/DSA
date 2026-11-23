@@ -25,9 +25,9 @@ public:
         }
         int res = stack[top] + inc[top];
         if (top > 0) {
-            inc[top - 1] += inc[top]; // Propagate lazy increment downward
+            inc[top - 1] += inc[top]; 
         }
-        inc[top] = 0; // Clear increment at current top
+        inc[top] = 0; 
         top--;
         return res;
     }
